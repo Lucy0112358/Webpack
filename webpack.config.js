@@ -4,10 +4,21 @@ const { optimize } = require("webpack");
 
 module.exports = {
   mode: "production",
-  entry: "./src/index.js",
+  entry: {
+    main: path.resolve(__dirname, "./src/index.js"),
+  },
   output: {
     path: path.resolve(__dirname, "./dist"),
-    filename: "index.js",
+    filename: "[contenthash].js",
+    clean: true,
+  },
+  devtool: "inline-source-map",
+  // devServer: {
+  //   contentBase: path.resolve(__dirname, "./dist"),
+  //   watchContentBase: true,
+  // },
+  module: {
+    rules: [{ test: /\.css$/, use: ["style-loader", "css-loader"] }],
   },
   plugins: [
     new HtmlWebpackPlugin({
